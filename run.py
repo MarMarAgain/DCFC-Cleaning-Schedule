@@ -11,16 +11,15 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('dcfccreds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-
-# Open the spreadsheet
 SHEET = GSPREAD_CLIENT.open('DCFC cleaning')
-print("Successfully connected to Google Sheets.")
-print("Spreadsheet title:", SHEET.title)
 
-# Select the worksheet
-worksheet = SHEET.sheet1
+def get_month():
+    """Get month desired from user"""
 
-# Insert data into the sheet
-data = ["Hello Again!"]
-worksheet.append_row(data)
-print("Data inserted successfully!")
+print("Please enter the month you wish to translate")
+print("Write the month with a capital letter at the beginning- ex'March'")
+
+data_str = input("Enter the month here: ")
+print( f"The month you provided is {data_str}")
+
+get_month()
