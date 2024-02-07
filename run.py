@@ -17,21 +17,26 @@ def get_month():
     """Get month desired from user"""
 
     print("Please enter the month you wish to translate")
-    print("Write the Month with a capital letter at the beginning- ex'March'")
+    print("Write the Month with a capital letter at the beginning - ex: 'March'")
 
-    data_str = input("Enter the Month here: ")
-    print( f"The Month you provided is {data_str}")
+    while True:
+        data_str = input("Enter the Month here: ")
+        print(f"The Month you provided is {data_str}")
 
-    validate_data(data_str)
+        try:
+            validate_data(data_str)
+            break 
+        except ValueError as e:
+            print(f"{e}  Please try again\n")
+            
 
 def validate_data(data_str):
     """ Raise an error if the user does not enter a Month"""
-    try:
-        if data_str != "April":
-            raise ValueError(
-                "I saide Month Dammit!!"
-            )
-    except ValueError as e :
-        print(f"Invalid data {e}. Please try again\n")
+
+    months = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"]
+    if data_str not in months:
+        raise ValueError("I said Month Dammit!!")
 
 get_month()
+
