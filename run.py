@@ -16,10 +16,22 @@ SHEET = GSPREAD_CLIENT.open('DCFC cleaning')
 def get_month():
     """Get month desired from user"""
 
-print("Please enter the month you wish to translate")
-print("Write the month with a capital letter at the beginning- ex'March'")
+    print("Please enter the month you wish to translate")
+    print("Write the Month with a capital letter at the beginning- ex'March'")
 
-data_str = input("Enter the month here: ")
-print( f"The month you provided is {data_str}")
+    data_str = input("Enter the Month here: ")
+    print( f"The Month you provided is {data_str}")
+
+    validate_data(data_str)
+
+def validate_data(data_str):
+    """ Raise an error if the user does not enter a Month"""
+    try:
+        if data_str != "April":
+            raise ValueError(
+                "I saide Month Dammit!!"
+            )
+    except ValueError as e :
+        print(f"Invalid data {e}. Please try again\n")
 
 get_month()
