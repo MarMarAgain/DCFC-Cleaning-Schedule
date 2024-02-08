@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import datetime
 
 SCOPE = [
    "https://www.googleapis.com/auth/spreadsheets",
@@ -30,14 +31,17 @@ def get_month():
         except ValueError as e:
             print(f"Invalid data {e}. Please try again\n")
 
+
 def validate_data(data_str):
     # Raise an error if the user does not enter a Month
+
     months = ["January", "February", "March", "April", "May", "June",
               "July", "August", "September", "October", "November", "December"]
     if data_str not in months:
         raise ValueError("I said Month Dammit!!")
 
-def get_sheet1_data():
+
+def get_sheet1_data(selected_month):
     # Open the source worksheet and get values from sheet 1
     source_worksheet = SHEET.worksheet("Sheet1")
     data = source_worksheet.get_all_values()
@@ -48,26 +52,34 @@ def get_sheet1_data():
         date = row[0]
         day = row[1]
         area = row[2]
+        # Changing any "JLH" to "Jack Lynch House"
+        if area == 'JLH':
+            area = 'Jack Lynch House'
         time = row[3]
-        duration = row[4]
-        processed_data.append(["Dance Cork Firkin Crane", area, duration, date, time])  # Remove unnecessary quotation mark
+        # Changing DCFC format hours to Angel Cleaning format hours. I chose 7 and 1 respectively as identifiers
+        if '7' in time:
+            time = '7am'
+        elif '1pm' in time:
+            time = '10am'
+        # Formatting duration
+        duration = f"{row[4]} hrs"  
+        processed_data.append(["Dance Cork Firkin Crane", area, duration, f"{date} {selected_month} 2024", time])  
 
     return processed_data
 
-def main():
-    # Get the month from the user
-    selected_month = get_month() 
 
+def main(selected_month):
     # Get data from Sheet1
-    processed_data = get_sheet1_data()
+    processed_data = get_sheet1_data(selected_month)
 
     # Open target worksheet (Sheet2)
     target_worksheet = SHEET.worksheet("Sheet2")
 
-    # Write processed data to the target worksheet. Start from the first row/column
-    for i, row in enumerate(processed_data, start=1): 
+    # Write processed data to the target worksheet. Start from the second row/column
+    for i, row in enumerate(processed_data, start=2): 
         target_worksheet.insert_row(row, i)
 
     print("Data has been successfully written to Sheet2.")
 
-main()
+selected_month = get_month() 
+main(selected_month)
