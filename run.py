@@ -27,7 +27,8 @@ def get_month():
         try:
             validate_data(data_str)
             # Return the validated month
-            return data_str  
+            selected_month = data_str
+            return selected_month
         except ValueError as e:
             print(f"Invalid data {e}. Please try again\n")
 
@@ -68,18 +69,30 @@ def get_sheet1_data(selected_month):
     return processed_data
 
 
-def main(selected_month):
+def main():
+    # Get the month from the user
+    selected_month = get_month() 
+
     # Get data from Sheet1
     processed_data = get_sheet1_data(selected_month)
 
     # Open target worksheet (Sheet2)
     target_worksheet = SHEET.worksheet("Sheet2")
 
+    # Add titles for the columns in Angle Claning Format to first row
+    titles = ["Place", "Area", "Duration", "Date", "Start Time"]
+    target_worksheet.insert_row(titles, 1)
+
+    # Make=ing the title bold
+    bold_format = {
+        "textFormat": {"bold": True}
+    }
+    target_worksheet.format("A1:E1", bold_format)
+
     # Write processed data to the target worksheet. Start from the second row/column
     for i, row in enumerate(processed_data, start=2): 
         target_worksheet.insert_row(row, i)
 
-    print("Data has been successfully written to Sheet2.")
+    print("Data has been successfully converted to Angel Cleaning Format in Sheet2.")
 
-selected_month = get_month() 
-main(selected_month)
+main()
