@@ -55,11 +55,11 @@ def get_sheet1_data(selected_month):
         # Check if the date cell is empty
         if not date:
             """If the date cell is empty and there's no previous date, skip the row 
-            ( so that there isnt an error at the beginning of a loop)"""
+            ( so that there isnt an error at the beginning of a loop). This will effectively skip two empty cells together"""
             if previous_date is None:
                 continue
             else:
-                # Otherwise, use the previous complete date
+                # Use the previous complete date( if there is only one empty cell, use the previous date)
                 date = previous_date
 
         # Update the previous date
@@ -87,7 +87,6 @@ def get_sheet1_data(selected_month):
     return processed_data
 
 
-
 def main():
     # Get the month from the user
     selected_month = get_month() 
@@ -98,20 +97,27 @@ def main():
     # Open target worksheet (Sheet2)
     target_worksheet = SHEET.worksheet("Sheet2")
 
-    # Add titles for the columns in Angel Cleaning Format to first row
+    # Clear previous values in Sheet2
+    target_worksheet.clear()
+
+    # Define the titles and corresponding cells 
     titles = ["Place", "Area", "Duration", "Date", "Start Time"]
+
+    # Insert the titles as the first row
     target_worksheet.insert_row(titles, 1)
 
-    # Make the titles bold
+    # Apply bold formatting to the title row.
     bold_format = {
         "textFormat": {"bold": True}
     }
-    target_worksheet.format("A1:E1", bold_format)
+    for i, title in enumerate(titles, start=1):
+        target_worksheet.format(f"{chr(64 + i)}1", bold_format)
 
     # Write processed data to the target worksheet. Start from the second row/column
     for i, row in enumerate(processed_data, start=2): 
         target_worksheet.insert_row(row, i)
 
-    print("Data has been successfully converted to Angel Cleaning Format in Sheet2.")
+    print("Changes Successful")
 
 main()
+
