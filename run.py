@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-import datetime
 
 SCOPE = [
    "https://www.googleapis.com/auth/spreadsheets",
@@ -39,7 +38,7 @@ def validate_data(data_str):
     months = ["January", "February", "March", "April", "May", "June",
               "July", "August", "September", "October", "November", "December"]
     if data_str not in months:
-        raise ValueError("I said Month Dammit!!")
+        raise ValueError("Invalid month format. Please enter the month with a capital letter at the beginning, e.g., 'March'.")
 
 
 def get_sheet1_data(selected_month):
@@ -49,10 +48,27 @@ def get_sheet1_data(selected_month):
 
     # Process the data
     processed_data = []
+    previous_date = None
     for row in data:
         date = row[0]
+
+        # Check if the date cell is empty
+        if not date:
+            """If the date cell is empty and there's no previous date, skip the row 
+            ( so that there isnt an error at the beginning of a loop)"""
+            if previous_date is None:
+                continue
+            else:
+                # Otherwise, use the previous complete date
+                date = previous_date
+
+        # Update the previous date
+        previous_date = date
+
+        # Extract other information from the row
         day = row[1]
         area = row[2]
+
         # Changing any "JLH" to "Jack Lynch House"
         if area == 'JLH':
             area = 'Jack Lynch House'
@@ -63,10 +79,13 @@ def get_sheet1_data(selected_month):
         elif '1pm' in time:
             time = '10am'
         # Formatting duration
-        duration = f"{row[4]} hrs"  
-        processed_data.append(["Dance Cork Firkin Crane", area, duration, f"{date} {selected_month} 2024", time])  
+        duration = f"{row[4]} hrs" 
+        if duration == " hrs":
+            continue 
+        processed_data.append(["Dance Cork Firkin Crane", area, duration, f"{date} {selected_month} 2024", time])
 
     return processed_data
+
 
 
 def main():
@@ -79,11 +98,11 @@ def main():
     # Open target worksheet (Sheet2)
     target_worksheet = SHEET.worksheet("Sheet2")
 
-    # Add titles for the columns in Angle Claning Format to first row
+    # Add titles for the columns in Angel Cleaning Format to first row
     titles = ["Place", "Area", "Duration", "Date", "Start Time"]
     target_worksheet.insert_row(titles, 1)
 
-    # Make=ing the title bold
+    # Make the titles bold
     bold_format = {
         "textFormat": {"bold": True}
     }
