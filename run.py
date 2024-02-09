@@ -99,18 +99,16 @@ def main():
 
     # Clear previous values in Sheet2
     target_worksheet.clear()
-
+    
     # Define the titles and corresponding cells 
     titles = ["Place", "Area", "Duration", "Date", "Start Time"]
 
-    # Insert the titles as the first row
-    target_worksheet.insert_row(titles, 1)
-
-    # Apply bold formatting to the title row.
+    # Apply bold formatting to the titles row
     bold_format = {
         "textFormat": {"bold": True}
     }
     for i, title in enumerate(titles, start=1):
+        target_worksheet.update_cell(1, i, title)
         target_worksheet.format(f"{chr(64 + i)}1", bold_format)
 
     # Write processed data to the target worksheet. Start from the second row/column
@@ -120,4 +118,3 @@ def main():
     print("Changes Successful")
 
 main()
-
