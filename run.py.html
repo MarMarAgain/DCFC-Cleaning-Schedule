@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>run.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+.s5 { color: #5f826b; font-style: italic;}
+.s6 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+run.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">gspread</span>
+<span class="s0">from </span><span class="s1">google</span><span class="s2">.</span><span class="s1">oauth2</span><span class="s2">.</span><span class="s1">service_account </span><span class="s0">import </span><span class="s1">Credentials</span>
+<span class="s0">from </span><span class="s1">datetime </span><span class="s0">import </span><span class="s1">datetime</span>
+
+<span class="s1">SCOPE </span><span class="s2">= [</span>
+    <span class="s3">&quot;https://www.googleapis.com/auth/spreadsheets&quot;</span><span class="s2">,</span>
+    <span class="s3">&quot;https://www.googleapis.com/auth/drive.file&quot;</span><span class="s2">,</span>
+    <span class="s3">&quot;https://www.googleapis.com/auth/drive&quot;</span>
+<span class="s2">]</span>
+
+<span class="s4"># Load Credentials and Access spreadsheet</span>
+<span class="s1">CREDS </span><span class="s2">= </span><span class="s1">Credentials</span><span class="s2">.</span><span class="s1">from_service_account_file</span><span class="s2">(</span><span class="s3">'dcfccreds.json'</span><span class="s2">)</span>
+<span class="s1">SCOPED_CREDS </span><span class="s2">= </span><span class="s1">CREDS</span><span class="s2">.</span><span class="s1">with_scopes</span><span class="s2">(</span><span class="s1">SCOPE</span><span class="s2">)</span>
+<span class="s1">GSPREAD_CLIENT </span><span class="s2">= </span><span class="s1">gspread</span><span class="s2">.</span><span class="s1">authorize</span><span class="s2">(</span><span class="s1">SCOPED_CREDS</span><span class="s2">)</span>
+<span class="s1">SHEET </span><span class="s2">= </span><span class="s1">GSPREAD_CLIENT</span><span class="s2">.</span><span class="s1">open</span><span class="s2">(</span><span class="s3">'DCFC cleaning'</span><span class="s2">)</span>
+
+
+<span class="s0">def </span><span class="s1">get_month</span><span class="s2">():</span>
+    <span class="s5">&quot;&quot;&quot;Get month desired from user&quot;&quot;&quot;</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s3">&quot;Please enter the current Month for validation&quot;</span><span class="s2">)</span>
+
+    <span class="s0">while True</span><span class="s2">:</span>
+        <span class="s1">data_str </span><span class="s2">= </span><span class="s1">input</span><span class="s2">(</span><span class="s3">&quot;Enter the Month here: &quot;</span><span class="s2">)</span>
+        <span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;The Month you provided is </span><span class="s0">{</span><span class="s1">data_str</span><span class="s0">}\n</span><span class="s3">&quot;</span><span class="s2">)</span>
+        <span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;Converting data now...</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s2">)</span>
+
+        <span class="s0">try</span><span class="s2">:</span>
+            <span class="s1">validate_data</span><span class="s2">(</span><span class="s1">data_str</span><span class="s2">)</span>
+            <span class="s4"># Return the validated month</span>
+            <span class="s1">selected_month </span><span class="s2">= </span><span class="s1">data_str</span>
+            <span class="s0">return </span><span class="s1">selected_month</span>
+        <span class="s0">except </span><span class="s1">ValueError </span><span class="s0">as </span><span class="s1">e</span><span class="s2">:</span>
+            <span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;Invalid data </span><span class="s0">{</span><span class="s1">e</span><span class="s0">}</span><span class="s3">. Please try again</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s2">)</span>
+
+
+<span class="s1">current_month </span><span class="s2">= </span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">now</span><span class="s2">().</span><span class="s1">month</span>
+
+
+<span class="s0">def </span><span class="s1">validate_data</span><span class="s2">(</span><span class="s1">data_str</span><span class="s2">):</span>
+    <span class="s4"># Raise an error if the user does not enter a Month</span>
+
+    <span class="s1">months </span><span class="s2">= [</span><span class="s3">&quot;january&quot;</span><span class="s2">, </span><span class="s3">&quot;february&quot;</span><span class="s2">, </span><span class="s3">&quot;march&quot;</span><span class="s2">, </span><span class="s3">&quot;april&quot;</span><span class="s2">, </span><span class="s3">&quot;may&quot;</span><span class="s2">, </span><span class="s3">&quot;june&quot;</span><span class="s2">,</span>
+              <span class="s3">&quot;july&quot;</span><span class="s2">, </span><span class="s3">&quot;august&quot;</span><span class="s2">, </span><span class="s3">&quot;september&quot;</span><span class="s2">, </span><span class="s3">&quot;october&quot;</span><span class="s2">, </span><span class="s3">&quot;november&quot;</span><span class="s2">, </span><span class="s3">&quot;december&quot;</span><span class="s2">]</span>
+    <span class="s0">if </span><span class="s1">data_str</span><span class="s2">.</span><span class="s1">lower</span><span class="s2">() </span><span class="s0">not in </span><span class="s1">months </span><span class="s0">or </span><span class="s1">data_str</span><span class="s2">.</span><span class="s1">lower</span><span class="s2">() != </span><span class="s1">months</span><span class="s2">[</span><span class="s1">current_month </span><span class="s2">- </span><span class="s6">1</span><span class="s2">]:</span>
+        <span class="s0">raise </span><span class="s1">ValueError</span><span class="s2">(</span><span class="s3">&quot;Invalid Month entered. Please enter the current Month only&quot;</span><span class="s2">)</span>
+
+
+<span class="s0">def </span><span class="s1">get_sheet1_data</span><span class="s2">(</span><span class="s1">selected_month</span><span class="s2">):</span>
+    <span class="s4"># Open the source worksheet and get values from sheet 1</span>
+    <span class="s1">source_worksheet </span><span class="s2">= </span><span class="s1">SHEET</span><span class="s2">.</span><span class="s1">worksheet</span><span class="s2">(</span><span class="s3">&quot;Sheet1&quot;</span><span class="s2">)</span>
+    <span class="s1">data </span><span class="s2">= </span><span class="s1">source_worksheet</span><span class="s2">.</span><span class="s1">get_all_values</span><span class="s2">()</span>
+
+    <span class="s4"># Process the data</span>
+    <span class="s1">processed_data </span><span class="s2">= []</span>
+    <span class="s1">regular_hours </span><span class="s2">= </span><span class="s6">0</span>
+    <span class="s1">extra_hours </span><span class="s2">= </span><span class="s6">0</span>
+    <span class="s1">previous_date </span><span class="s2">= </span><span class="s0">None</span>
+    <span class="s0">for </span><span class="s1">row </span><span class="s0">in </span><span class="s1">data</span><span class="s2">:</span>
+        <span class="s1">date </span><span class="s2">= </span><span class="s1">row</span><span class="s2">[</span><span class="s6">0</span><span class="s2">]</span>
+
+        <span class="s4"># Check if the date cell is empty</span>
+        <span class="s0">if not </span><span class="s1">date</span><span class="s2">:</span>
+            <span class="s3">&quot;&quot;&quot;If the date cell is empty and there's no previous date, skip the row  
+            ( so that there isnt an error at the beginning of a loop). This will effectively skip two empty cells together&quot;&quot;&quot;</span>
+            <span class="s0">if </span><span class="s1">previous_date </span><span class="s0">is None</span><span class="s2">:</span>
+                <span class="s0">continue</span>
+            <span class="s0">else</span><span class="s2">:</span>
+                <span class="s4"># Use the previous complete date( if there is only one empty cell, use the previous date)</span>
+                <span class="s1">date </span><span class="s2">= </span><span class="s1">previous_date</span>
+
+        <span class="s4"># Update the previous date</span>
+        <span class="s1">previous_date </span><span class="s2">= </span><span class="s1">date</span>
+
+        <span class="s4"># Extract other information from the row</span>
+        <span class="s1">day </span><span class="s2">= </span><span class="s1">row</span><span class="s2">[</span><span class="s6">1</span><span class="s2">]</span>
+        <span class="s1">area </span><span class="s2">= </span><span class="s1">row</span><span class="s2">[</span><span class="s6">2</span><span class="s2">]</span>
+
+        <span class="s4"># Changing any &quot;JLH&quot; to &quot;Jack Lynch House&quot;</span>
+        <span class="s0">if </span><span class="s1">area </span><span class="s2">== </span><span class="s3">'JLH'</span><span class="s2">:</span>
+            <span class="s1">area </span><span class="s2">= </span><span class="s3">'Jack Lynch House'</span>
+        <span class="s1">time </span><span class="s2">= </span><span class="s1">row</span><span class="s2">[</span><span class="s6">3</span><span class="s2">]</span>
+        <span class="s4"># Changing DCFC format hours to Angel Cleaning format hours. I chose 7 and 1 respectively as identifiers</span>
+        <span class="s0">if </span><span class="s3">'7' </span><span class="s0">in </span><span class="s1">time</span><span class="s2">:</span>
+            <span class="s1">time </span><span class="s2">= </span><span class="s3">'7am'</span>
+        <span class="s0">elif </span><span class="s3">'1pm' </span><span class="s0">in </span><span class="s1">time</span><span class="s2">:</span>
+            <span class="s1">time </span><span class="s2">= </span><span class="s3">'10am'</span>
+        <span class="s4"># Formatting duration</span>
+        <span class="s1">duration </span><span class="s2">= </span><span class="s3">f&quot;</span><span class="s0">{</span><span class="s1">row</span><span class="s2">[</span><span class="s6">4</span><span class="s2">]</span><span class="s0">} </span><span class="s3">hrs&quot;</span>
+        <span class="s0">if </span><span class="s1">duration </span><span class="s2">== </span><span class="s3">&quot; hrs&quot;</span><span class="s2">:</span>
+            <span class="s0">continue</span>
+
+        <span class="s4"># Check if it's Sunday</span>
+        <span class="s0">if </span><span class="s1">day</span><span class="s2">.</span><span class="s1">lower</span><span class="s2">() == </span><span class="s3">&quot;sunday&quot;</span><span class="s2">:</span>
+            <span class="s1">extra_hours </span><span class="s2">+= </span><span class="s1">float</span><span class="s2">(</span><span class="s1">row</span><span class="s2">[</span><span class="s6">4</span><span class="s2">])  </span><span class="s4"># Assuming duration is in hours</span>
+        <span class="s0">else</span><span class="s2">:</span>
+            <span class="s1">regular_hours </span><span class="s2">+= </span><span class="s1">float</span><span class="s2">(</span><span class="s1">row</span><span class="s2">[</span><span class="s6">4</span><span class="s2">])  </span><span class="s4"># Assuming duration is in hours</span>
+
+        <span class="s1">processed_data</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span>
+            <span class="s2">[</span><span class="s3">&quot;Dance Cork Firkin Crane&quot;</span><span class="s2">, </span><span class="s1">area</span><span class="s2">, </span><span class="s1">duration</span><span class="s2">, </span><span class="s3">f&quot;</span><span class="s0">{</span><span class="s1">date</span><span class="s0">} {</span><span class="s1">selected_month</span><span class="s2">.</span><span class="s1">capitalize</span><span class="s2">()</span><span class="s0">} </span><span class="s3">2024&quot;</span><span class="s2">, </span><span class="s1">time</span><span class="s2">])</span>
+
+    <span class="s0">return </span><span class="s1">processed_data</span><span class="s2">, </span><span class="s1">regular_hours</span><span class="s2">, </span><span class="s1">extra_hours</span>
+
+
+<span class="s0">def </span><span class="s1">main</span><span class="s2">():</span>
+    <span class="s4"># Get the month from the user</span>
+    <span class="s1">selected_month </span><span class="s2">= </span><span class="s1">get_month</span><span class="s2">()</span>
+
+    <span class="s4"># Get data from Sheet1</span>
+    <span class="s1">processed_data</span><span class="s2">, </span><span class="s1">regular_hours</span><span class="s2">, </span><span class="s1">extra_hours </span><span class="s2">= </span><span class="s1">get_sheet1_data</span><span class="s2">(</span><span class="s1">selected_month</span><span class="s2">)</span>
+
+    <span class="s4"># Open target worksheet (Sheet2)</span>
+    <span class="s1">target_worksheet </span><span class="s2">= </span><span class="s1">SHEET</span><span class="s2">.</span><span class="s1">worksheet</span><span class="s2">(</span><span class="s3">&quot;Sheet2&quot;</span><span class="s2">)</span>
+
+    <span class="s4"># Clear previous values in Sheet2</span>
+    <span class="s1">target_worksheet</span><span class="s2">.</span><span class="s1">clear</span><span class="s2">()</span>
+
+    <span class="s4"># Define the titles and corresponding cells</span>
+    <span class="s1">titles </span><span class="s2">= [</span><span class="s3">&quot;Place&quot;</span><span class="s2">, </span><span class="s3">&quot;Area&quot;</span><span class="s2">, </span><span class="s3">&quot;Duration&quot;</span><span class="s2">, </span><span class="s3">&quot;Date&quot;</span><span class="s2">, </span><span class="s3">&quot;Start Time&quot;</span><span class="s2">, </span><span class="s3">&quot;Billable Hours (regular)&quot;</span><span class="s2">, </span><span class="s3">&quot;Billable Hours (extra)&quot;</span><span class="s2">]</span>
+
+    <span class="s4"># Apply bold formatting to the titles row</span>
+    <span class="s1">bold_format </span><span class="s2">= {</span>
+        <span class="s3">&quot;textFormat&quot;</span><span class="s2">: {</span><span class="s3">&quot;bold&quot;</span><span class="s2">: </span><span class="s0">True</span><span class="s2">}</span>
+    <span class="s2">}</span>
+    <span class="s0">for </span><span class="s1">i</span><span class="s2">, </span><span class="s1">title </span><span class="s0">in </span><span class="s1">enumerate</span><span class="s2">(</span><span class="s1">titles</span><span class="s2">, </span><span class="s1">start</span><span class="s2">=</span><span class="s6">1</span><span class="s2">):</span>
+        <span class="s1">target_worksheet</span><span class="s2">.</span><span class="s1">update_cell</span><span class="s2">(</span><span class="s6">1</span><span class="s2">, </span><span class="s1">i</span><span class="s2">, </span><span class="s1">title</span><span class="s2">)</span>
+        <span class="s1">target_worksheet</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">f&quot;</span><span class="s0">{</span><span class="s1">chr</span><span class="s2">(</span><span class="s6">64 </span><span class="s2">+ </span><span class="s1">i</span><span class="s2">)</span><span class="s0">}</span><span class="s3">1&quot;</span><span class="s2">, </span><span class="s1">bold_format</span><span class="s2">)</span>
+
+    <span class="s4"># Write processed data to the target worksheet. Start from the second row/column</span>
+    <span class="s0">for </span><span class="s1">i</span><span class="s2">, </span><span class="s1">row </span><span class="s0">in </span><span class="s1">enumerate</span><span class="s2">(</span><span class="s1">processed_data</span><span class="s2">, </span><span class="s1">start</span><span class="s2">=</span><span class="s6">2</span><span class="s2">):</span>
+        <span class="s1">target_worksheet</span><span class="s2">.</span><span class="s1">insert_row</span><span class="s2">(</span><span class="s1">row</span><span class="s2">, </span><span class="s1">i</span><span class="s2">)</span>
+
+    <span class="s1">print</span><span class="s2">(</span><span class="s3">&quot;Calculating billable hours&quot;</span><span class="s2">)</span>
+
+    <span class="s4"># Insert regular and extra hours in Sheet2</span>
+    <span class="s1">target_worksheet</span><span class="s2">.</span><span class="s1">update_cell</span><span class="s2">(</span><span class="s6">2</span><span class="s2">, </span><span class="s1">len</span><span class="s2">(</span><span class="s1">titles</span><span class="s2">) - </span><span class="s6">1</span><span class="s2">, </span><span class="s1">regular_hours</span><span class="s2">)  </span><span class="s4"># Regular hours</span>
+    <span class="s1">target_worksheet</span><span class="s2">.</span><span class="s1">update_cell</span><span class="s2">(</span><span class="s6">2</span><span class="s2">, </span><span class="s1">len</span><span class="s2">(</span><span class="s1">titles</span><span class="s2">), </span><span class="s1">extra_hours</span><span class="s2">)  </span><span class="s4"># Extra hours</span>
+
+    <span class="s1">print</span><span class="s2">(</span><span class="s3">&quot;Changes successful&quot;</span><span class="s2">)</span>
+
+
+<span class="s1">main</span><span class="s2">()</span>
+</pre>
+</body>
+</html>
