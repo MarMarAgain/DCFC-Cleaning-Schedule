@@ -132,8 +132,8 @@ def main():
     print("Calculating billable hours")
 
     # Insert regular and extra hours in Sheet2
-    target_worksheet.update_cell(2, len(titles) - 1, regular_hours)  # Regular hours
-    target_worksheet.update_cell(2, len(titles), extra_hours)  # Extra hours
+    target_worksheet.update_cell(2, len(titles) - 1, regular_hours) 
+    target_worksheet.update_cell(2, len(titles), extra_hours)  
 
     print("Changes successful")
 
