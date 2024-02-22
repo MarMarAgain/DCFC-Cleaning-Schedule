@@ -1,16 +1,21 @@
-#Dance Cork Firkin Crane (DCFC) Cleaning Schedule.
+# Dance Cork Firkin Crane (DCFC) Cleaning Schedule.
 
-![Dance Cor Firkin Crane and New Angel Logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+![Dance Cor Firkin Crane and New Angel Logo](logos.png)
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+This project is an application built for Dance Cork Firkin Crane and Angel Cleaning. 
+Angel Cleaning is a third-party cleaning company that is hired into the Theatre on an almost daily basis. They also clean a DCFC managed artist accommodation - Jack Lyncvh House. There is one format that DCFC writes their cleaning schedule in , and another format that Angel cleaning perfers to receive. This programme rewrites the information from the DCFC formated schedule and rewrites it in the Angel Cleaning Format on Sheet 2. 
 
-## Requirements
+## Steps.
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+- The programme asks the user to confirm the current month via inputted data ( Month) 
+- The Month entered is verified using datetime. Restricting the Month to be printed to the current calender month is an extra precaution to ensure the 
+  correct information is sent to Angel Cleaning. 
+- Once the correct Month is verified,Sheet 2 is cleared and the schedule on Sheet 1 is printed in the Angel Cleaning format on Sheet 2.
+- The programme then calculates the total amount of regular billable hours and extra hours repectively._Please note that extra hours equates to Sunday hours, which cost time and a half. "Extra hours" is used as this is the term used internally within the organisations._
 
-## Creating the Heroku app
+### User flow Diagram.
+
+![User Flow Diagram](diagram.png)
 
 When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
 
@@ -22,6 +27,9 @@ You must then create a _Config Var_ called `PORT`. Set this to `8000`
 If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
 
 Connect your GitHub repository and deploy as normal.
+
+## Checks 
+
 
 ## Constraints
 
