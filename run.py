@@ -1,7 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
-import os
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -10,13 +9,7 @@ SCOPE = [
 ]
 
 # Load Credentials and Access spreadsheet
-CREDS = None
-
-if os.environ.get('CREDS'):
-    CREDS = Credentials.from_service_account_info(json.loads(os.environ.get('CREDS')))
-else:
-    CREDS = Credentials.from_service_account_file('dcfccreds.json')
-
+CREDS = Credentials.from_service_account_file('dcfccreds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('DCFC cleaning')
