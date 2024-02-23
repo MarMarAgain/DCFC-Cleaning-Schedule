@@ -1,6 +1,6 @@
 # Dance Cork Firkin Crane (DCFC) Cleaning Schedule.
 
-![Dance Cor Firkin Crane and New Angel Logo]([logos.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/016f6927-0313-4fb3-9e64-f24b5c43aac5))
+![Dance Cor Firkin Crane and New Angel Logo](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/016f6927-0313-4fb3-9e64-f24b5c43aac5)
 
 ### An application for DCFC to easily reformat their cleaning schedule.
 
@@ -18,23 +18,23 @@ This application was developed for Dance Cork Firkin Crane (DCFC) and Angel Clea
 
 ### User flow Diagram.
 
-![User Flow Diagram]([diagram.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/aad127a0-d1ae-414a-8cf6-f49ad08105be))
+![User Flow Diagram](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/aad127a0-d1ae-414a-8cf6-f49ad08105be)
 
 ### Dance Cork Firkin Crane Format
-![Dance Cork Firkin Crane]([diagram.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/aad127a0-d1ae-414a-8cf6-f49ad08105be))
+![Dance Cork Firkin Crane](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/9dd01e0f-516b-4651-a324-367b8dba1cf3)
 
 ### Angel Cleaning Format
-![Angel Cleaning's perfered format]([diagram.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/6e43ef13-1580-4219-9ffa-e27625986ce4))
+![Angel Cleaning's perfered format](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/6e43ef13-1580-4219-9ffa-e27625986ce4)
 
-## Checks 
+## Checks - Snyk.io 
 
-![Synk.io check]([SYK.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/39f2218a-d4ae-4139-b781-bcc40ce6c494))
+![Snyk.io check](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/39f2218a-d4ae-4139-b781-bcc40ce6c494)
 
 ## Deployment
 
 The application deployment faced some obstacles due to errors occurring within the IDE environment. Consequently, the CREDS file had to be added separately to GitHub. This file pertains to a third-party account tailored specifically for this application. It's important to note that access to both companies' data is restricted solely to their cleaning rota and is not accessible beyond that context.
 
-- Deployment happened on a Heoku account.
+- Deployment achieved via  Heoku.
 - The final iteration of the code was copied to the relevent GitHub repository.
 - The relavent Creds file was added to the Heroku account.
 - Two build packs were also added to the Heroku account in this order :
@@ -45,10 +45,9 @@ The application deployment faced some obstacles due to errors occurring within t
 - The dcfccreds.json file was added to the GitHub repository.
 - The application was redeployed and foud to be fully functional.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
 
 ## Credits
 
 Extra reading / help from the following book : Matthes, Eric. Python Crash Course, 3rd Edition: A Hands-on, Project-Based Introduction to Programming. No Starch Press, Incorporated, 2023. 
 
-datetime method used : **Insert Datetime**
+datetime method used : [Datetime](https://stackoverflow.com/questions/28189442/datetime-current-year-and-month-in-python)
