@@ -44,6 +44,7 @@ The application deployment faced some obstacles due to errors occurring within t
 - Apon advice from tech/tutor support, the import so method was tried however this was still unsucessful.
 - The dcfccreds.json file was added to the GitHub repository.
 - The application was redeployed and foud to be fully functional.
+  ***CREDS issue documented in issues***
 
 ## Further Developmet
 This project has potential to develop in a number of ways:
