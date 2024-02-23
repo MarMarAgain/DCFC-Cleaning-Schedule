@@ -45,6 +45,12 @@ The application deployment faced some obstacles due to errors occurring within t
 - The dcfccreds.json file was added to the GitHub repository.
 - The application was redeployed and foud to be fully functional.
 
+## Further Developmet
+This project has potential to develop in a number of ways:
+- The "extra hours" section can expand to account for bank holidays
+- A projected cost total can be implemented.
+- Apon a user prompt, the completed Angel formatted list can be sent directly to the relavent parties.
+
 
 ## Credits
 
