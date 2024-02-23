@@ -1,6 +1,6 @@
 # Dance Cork Firkin Crane (DCFC) Cleaning Schedule.
 
-![Dance Cor Firkin Crane and New Angel Logo](logos.png)
+![Dance Cor Firkin Crane and New Angel Logo]([logos.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/016f6927-0313-4fb3-9e64-f24b5c43aac5))
 
 ### An application for DCFC to easily reformat their cleaning schedule.
 
@@ -18,23 +18,17 @@ This application was developed for Dance Cork Firkin Crane (DCFC) and Angel Clea
 
 ### User flow Diagram.
 
-![User Flow Diagram](diagram.png)
+![User Flow Diagram]([diagram.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/aad127a0-d1ae-414a-8cf6-f49ad08105be))
 
 ### Dance Cork Firkin Crane Format
-![User Flow Diagram](diagram.png)
+![Dance Cork Firkin Crane]([diagram.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/aad127a0-d1ae-414a-8cf6-f49ad08105be))
 
 ### Angel Cleaning Format
-![User Flow Diagram](diagram.png)
-
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
-
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
-
-Connect your GitHub repository and deploy as normal.
+![Angel Cleaning's perfered format]([diagram.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/6e43ef13-1580-4219-9ffa-e27625986ce4))
 
 ## Checks 
 
-![Syk check](SYK.png)
+![Synk.io check]([SYK.png](https://github.com/MarMarAgain/DCFC-Cleaning-Schedule/assets/158588349/39f2218a-d4ae-4139-b781-bcc40ce6c494))
 
 ## Deployment
 
@@ -47,7 +41,8 @@ The application deployment faced some obstacles due to errors occurring within t
   1. `heroku/python`
   2. `heroku/nodejs`
 - The project was deployed and didn't function as the creds file wasn't picked up by the application ( due to IDE erros ).
-- Apon advice from tech support the, the CREDS file was added to the GitHub repository.
+- Apon advice from tech/tutor support, the import so method was tried however this was still unsucessful.
+- The dcfccreds.json file was added to the GitHub repository.
 - The application was redeployed and foud to be fully functional.
 
 The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
